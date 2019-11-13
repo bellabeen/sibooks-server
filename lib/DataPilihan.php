@@ -296,13 +296,13 @@ class KategoriPilihan{
         // return "test";
         $data="";
         $row = $this->getKategori($id);
-        if (count($row["data"])==0) {
+        if (count($row["data"]) == 0) {
             http_response_code(304);
             return array("msg"=>$row["msg"]."id ".$id);
         }
 
         $kueri = "DELETE FROM ".$this->table_name;
-        $kueri .=" WHERE id_kategori='".$id."'";
+        $kueri .=" WHERE  id_kategori='".$id."'";
         $hasil = $this->db->query($kueri) or die ("Error ".$this->db->connect_error);
 
         http_response_code(200);
