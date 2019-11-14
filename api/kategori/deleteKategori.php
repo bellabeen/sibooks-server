@@ -11,6 +11,6 @@ $kategoripilihan = new KategoriPilihan();
 
 $id = isset($_POST['id_kategori']) ? $_POST['id_kategori']: null;
 
-$result = $kategoripilihan->delete($id);
+$result = $kategoripilihan->deleteKategori($id);
 $format= new DataFormat();
 echo $format->asJSON($result);
