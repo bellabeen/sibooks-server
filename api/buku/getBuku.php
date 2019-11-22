@@ -1,5 +1,5 @@
 <?php
-include_once(__DIR__."/../../lib/DataPilihan.php");
+include_once(__DIR__."/../../lib/KategoriPilihan.php");
 include_once(__DIR__."/../../lib/DataFormat.php");
 header('Access-Control-Allow-Origin:*');
 $kategoripilihan = new KategoriPilihan();
