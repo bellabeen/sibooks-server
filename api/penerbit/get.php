@@ -3,8 +3,8 @@ include_once(__DIR__."/../../lib/penerbit.php");
 include_once(__DIR__."/../../lib/DataFormat.php");
 header('Access-Control-Allow-Origin:*');
 $penerbitpilihan = new PenerbitPilihan();
-if(isset($_GET['id_penerbit'])){
-    $data=$penerbitpilihan->getPenerbitPilihan($_GET['id_penerbit']);
+if(isset($_GET['kode_penerbit'])){
+    $data=$penerbitpilihan->getPenerbitPilihan($_GET['kode_penerbit']);
 } else {
     $data=$penerbitpilihan->getAll();
 }

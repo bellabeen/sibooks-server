@@ -9,8 +9,8 @@ class BukuPilihan{
     private $judul = null;
     private $penulis = null;
     private $cover = null;
-    public  $id_kategori = null;
-    public  $id_penerbit = null;
+    public  $kode_kategori = null;
+    public  $kode_penerbit = null;
 
     function __construct(){
         if ($this->db ==  null){
@@ -19,14 +19,14 @@ class BukuPilihan{
         }
     }
 
-    function setValue($kode_buku, $judul, $penulis, $cover, $id_kategori, $id_penerbit){
+    function setValue($kode_buku, $judul, $penulis, $cover, $kode_kategori, $kode_penerbit){
         // $this();
         $this->kode_buku = $kode_buku;
         $this->judul = $judul;
         $this->penulis = $penulis;
         $this->cover = $cover;
-        $this->id_kategori = $id_kategori;
-        $this->id_penerbit = $id_penerbit;
+        $this->kode_kategori = $kode_kategori;
+        $this->kode_penerbit = $kode_penerbit;
 
     }
 
@@ -45,16 +45,23 @@ class BukuPilihan{
             return array('msg' => "KOde tidak boleh kosong");
         } 
         else{
+            $foto = $_FILES['cover']['name'];
+            $tmp = $_FILES['cover']['tmp_name'];
+            $cover = date('dmYHis').$foto;
+
+            //set path folder tempat penyimpanan foto
+            $path = "upload/".$cover;
+            move_uploaded_file($tmp, $path);
             $kueri = "INSERT INTO ".$this->table_name1." SET ";
             $kueri .= "kode_buku='".$this->kode_buku ."',";
             $kueri .= "judul='".$this->judul ."',";
             $kueri .= "penulis='".$this->penulis ."',";
             $kueri .= "cover='".$this->cover ."',";
-            $kueri .= "id_kategori='".$this->id_kategori."',";
-            $kueri .= "id_penerbit='".$this->id_penerbit ."'";
+            $kueri .= "kode_kategori='".$this->kode_kategori."',";
+            $kueri .= "kode_penerbit='".$this->kode_penerbit ."'";
             $hasil = $this->db->query($kueri);
             if ($hasil) {
-                http_response_code(201);
+                http_response_code(200);
                 return array('msg' => 'success');
             } else {
                 http_response_code(503);
@@ -65,7 +72,7 @@ class BukuPilihan{
     }
 
     //fungsi update data
-    function update($kode_buku,$judul=null, $penulis=null, $cover=null, $id_kategori=null, $id_penerbit=null){
+    function update($kode_buku,$judul=null, $penulis=null, $cover=null, $kode_kategori=null, $kode_penerbit=null){
         $hasil= $this->getBukuPilihan($kode_buku);
         $count=count($hasil["data"]);
         if ($count==0){ 
@@ -80,22 +87,22 @@ class BukuPilihan{
             $hasil["data"][0]["judul"],
             $hasil["data"][0]["penulis"],
             $hasil["data"][0]["cover"],
-            $hasil["data"][0]["id_kategori"],
-            $hasil["data"][0]["id_penerbit"]
+            $hasil["data"][0]["kode_kategori"],
+            $hasil["data"][0]["kode_penerbit"]
             );
 
             if ($judul!=null) $this->judul=$judul;
             if ($penulis!=null) $this->penulis=$penulis;
             if ($cover!=null) $this->cover=$cover;
-            if ($id_kategori!=null) $this->id_kategori=$id_kategori;
-            if ($id_penerbit!=null) $this->id_penerbit=$id_penerbit;
+            if ($kode_kategori!=null) $this->kode_kategori=$kode_kategori;
+            if ($kode_penerbit!=null) $this->kode_penerbit=$kode_penerbit;
 
             $kueri = "UPDATE ".$this->table_name1." SET ";
             $kueri .= "judul='".$this->judul."',";
             $kueri .= "penulis='".$this->penulis."',";
             $kueri .= "cover='".$this->cover."',";
-            $kueri .= "id_kategori='".$this->id_kategori."',";
-            $kueri .= "id_penerbit='".$this->id_penerbit."'";
+            $kueri .= "kode_kategori='".$this->kode_kategori."',";
+            $kueri .= "kode_penerbit='".$this->kode_penerbit."'";
             $kueri .= " WHERE kode_buku='".$this->kode_buku."'";
             $hasil = $this->db->query($kueri);
             if ($hasil){
@@ -140,10 +147,10 @@ class BukuPilihan{
         return array("msg"=>"success", "data"=>$data);
     }
 
-    function getPenerbitPilihan($id_penerbit){
+    function getPenerbitPilihan($kode_penerbit){
         // return "test";
         $kueri = "SELECT * FROM ".$this->table_name3;
-        $kueri .=" WHERE id_penerbit='".$id_penerbit."'";
+        $kueri .=" WHERE kode_penerbit='".$kode_penerbit."'";
         $hasil = $this->db->query($kueri) or die ("Error ".$this->db->connect_error);
         http_response_code(200);
         $data = array();
@@ -155,10 +162,10 @@ class BukuPilihan{
         return array("msg"=>"success", "data"=>$data);
     }
 
-    function getKategoriPilihan($id_kategori){
+    function getKategoriPilihan($kode_kategori){
         // return "test";
         $kueri = "SELECT * FROM ".$this->table_name2;
-        $kueri .=" WHERE id_penerbit='".$id_kategori."'";
+        $kueri .=" WHERE kode_kategori='".$kode_kategori."'";
         $hasil = $this->db->query($kueri) or die ("Error ".$this->db->connect_error);
         http_response_code(200);
         $data = array();

@@ -8,9 +8,9 @@ header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
 $penerbitpilihan = new PenerbitPilihan();
-$id_penerbit = isset($_POST['id_penerbit']) ? $_POST['id_penerbit']: null;
+$kode_penerbit = isset($_POST['kode_penerbit']) ? $_POST['kode_penerbit']: null;
 $penerbit = isset($_POST['penerbit']) ? $_POST['penerbit']: null;
-$penerbitpilihan->setValue($id_penerbit, $penerbit);
+$penerbitpilihan->setValue($kode_penerbit, $penerbit);
 $result = $penerbitpilihan->create();
 $format= new DataFormat();
 echo $format->asJSON($result);

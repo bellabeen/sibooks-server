@@ -3,8 +3,8 @@ include_once(__DIR__."/../../lib/kategori.php");
 include_once(__DIR__."/../../lib/DataFormat.php");
 header('Access-Control-Allow-Origin:*');
 $kategoripilihan = new KategoriPilihan();
-if(isset($_GET['id_kategori'])){
-    $data=$kategoripilihan->getKategoriPilihan($_GET['id_kategori']);
+if(isset($_GET['kode_kategori'])){
+    $data=$kategoripilihan->getKategoriPilihan($_GET['kode_kategori']);
 } else {
     $data=$kategoripilihan->getAll();
 }

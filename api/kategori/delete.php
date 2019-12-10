@@ -8,6 +8,6 @@ header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
 $kategoripilihan = new KategoriPilihan();
-$result = $kategoripilihan->delete($_POST['id_kategori']);
+$result = $kategoripilihan->delete($_POST['kode_kategori']);
 $format= new DataFormat();
 echo $format->asJSON($result);

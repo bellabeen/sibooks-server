@@ -3,8 +3,8 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: 13 Nov 2019 pada 09.23
--- Versi Server: 10.1.41-MariaDB-0ubuntu0.18.04.1
+-- Generation Time: 10 Des 2019 pada 07.14
+-- Versi Server: 10.1.43-MariaDB-0ubuntu0.18.04.1
 -- PHP Version: 7.2.24-0ubuntu0.18.04.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -17,7 +17,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `sibook`
+-- Database: `sibooks`
 --
 
 -- --------------------------------------------------------
@@ -30,9 +30,17 @@ CREATE TABLE `buku` (
   `kode_buku` varchar(10) NOT NULL,
   `judul` varchar(50) NOT NULL,
   `penulis` varchar(30) NOT NULL,
-  `id_kategori` int(5) NOT NULL,
-  `id_penerbit` int(5) NOT NULL
+  `cover` blob NOT NULL,
+  `kode_kategori` varchar(10) NOT NULL,
+  `kode_penerbit` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `buku`
+--
+
+INSERT INTO `buku` (`kode_buku`, `judul`, `penulis`, `cover`, `kode_kategori`, `kode_penerbit`) VALUES
+('UMM01', 'Sebuah Seni untuk Bersikap Bodo Amat', 'bella', '', '123', '1234');
 
 -- --------------------------------------------------------
 
@@ -41,17 +49,18 @@ CREATE TABLE `buku` (
 --
 
 CREATE TABLE `kategori` (
-  `id_kategori` int(5) NOT NULL,
-  `kategori` varchar(50) NOT NULL
+  `kode_kategori` varchar(10) NOT NULL,
+  `kategori` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data untuk tabel `kategori`
 --
 
-INSERT INTO `kategori` (`id_kategori`, `kategori`) VALUES
-(1, 'Filsafat'),
-(2, 'Psikologi');
+INSERT INTO `kategori` (`kode_kategori`, `kategori`) VALUES
+('103', 'Coba update'),
+('111', 'Coba insert  data'),
+('123', 'Filsafat');
 
 -- --------------------------------------------------------
 
@@ -60,17 +69,17 @@ INSERT INTO `kategori` (`id_kategori`, `kategori`) VALUES
 --
 
 CREATE TABLE `penerbit` (
-  `id_penerbit` int(5) NOT NULL,
-  `penerbit` varchar(50) NOT NULL
+  `kode_penerbit` varchar(10) NOT NULL,
+  `penerbit` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data untuk tabel `penerbit`
 --
 
-INSERT INTO `penerbit` (`id_penerbit`, `penerbit`) VALUES
-(1, 'Bukune'),
-(2, 'Bukune');
+INSERT INTO `penerbit` (`kode_penerbit`, `penerbit`) VALUES
+('1234', 'Coba update'),
+('777', 'Coba insert  data');
 
 --
 -- Indexes for dumped tables
@@ -81,35 +90,21 @@ INSERT INTO `penerbit` (`id_penerbit`, `penerbit`) VALUES
 --
 ALTER TABLE `buku`
   ADD PRIMARY KEY (`kode_buku`),
-  ADD KEY `id_kategori` (`id_kategori`),
-  ADD KEY `id_penerbit` (`id_penerbit`);
+  ADD KEY `kode_kategori` (`kode_kategori`),
+  ADD KEY `kode_penerbit` (`kode_penerbit`);
 
 --
 -- Indexes for table `kategori`
 --
 ALTER TABLE `kategori`
-  ADD PRIMARY KEY (`id_kategori`);
+  ADD PRIMARY KEY (`kode_kategori`);
 
 --
 -- Indexes for table `penerbit`
 --
 ALTER TABLE `penerbit`
-  ADD PRIMARY KEY (`id_penerbit`);
+  ADD PRIMARY KEY (`kode_penerbit`);
 
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `kategori`
---
-ALTER TABLE `kategori`
-  MODIFY `id_kategori` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
---
--- AUTO_INCREMENT for table `penerbit`
---
-ALTER TABLE `penerbit`
-  MODIFY `id_penerbit` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
 --
@@ -118,8 +113,8 @@ ALTER TABLE `penerbit`
 -- Ketidakleluasaan untuk tabel `buku`
 --
 ALTER TABLE `buku`
-  ADD CONSTRAINT `buku_ibfk_1` FOREIGN KEY (`id_kategori`) REFERENCES `kategori` (`id_kategori`),
-  ADD CONSTRAINT `buku_ibfk_2` FOREIGN KEY (`id_penerbit`) REFERENCES `penerbit` (`id_penerbit`);
+  ADD CONSTRAINT `buku_ibfk_1` FOREIGN KEY (`kode_kategori`) REFERENCES `kategori` (`kode_kategori`),
+  ADD CONSTRAINT `buku_ibfk_2` FOREIGN KEY (`kode_penerbit`) REFERENCES `penerbit` (`kode_penerbit`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

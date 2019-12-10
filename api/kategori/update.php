@@ -8,10 +8,10 @@ header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
 
-$id_kategori = isset($_POST['id_kategori']) ? $_POST['id_kategori']: null;
+$kode_kategori = isset($_POST['kode_kategori']) ? $_POST['kode_kategori']: null;
 $kategori = isset($_POST['kategori']) ? $_POST['kategori']: null;
 
 $kategoripilihan = new KategoriPilihan();
-$result = $kategoripilihan->update($_POST['id_kategori'], $_POST['kategori']);
+$result = $kategoripilihan->update($_POST['kode_kategori'], $_POST['kategori']);
 $format= new DataFormat();
 echo $format->asJSON($result);

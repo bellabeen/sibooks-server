@@ -3,7 +3,7 @@ include_once (__DIR__ . "/DB.php");
 class KategoriPilihan{
     private $table_name='kategori';
     private $db = null;
-    public  $id_kategori=null;
+    public  $kode_kategori=null;
     private $kategori=null;
 
     function __construct(){
@@ -13,9 +13,9 @@ class KategoriPilihan{
         }
     }
 
-    function setValue($id_kategori, $kategori){
+    function setValue($kode_kategori, $kategori){
         // $this();
-        $this->id_kategori = $id_kategori;
+        $this->kode_kategori = $kode_kategori;
         $this->kategori = $kategori;
 
     }
@@ -24,19 +24,19 @@ class KategoriPilihan{
     ///fungsi pennyimpanan data berhasil atau tidak
     function create(){
         // $count = count($this->getBukuPilihan($this->kode_buku));
-        $bk= $this->getKategoriPilihan($this->id_kategori);
+        $bk= $this->getKategoriPilihan($this->kode_kategori);
         $count = count($bk["data"]);
         if ($count>0) {
             http_response_code(503);
             return array('msg' => "Data sudah ada, tidak berhasil disimpan");
         } 
-        else if ($this->id_kategori == null){
+        else if ($this->kode_kategori == null){
             http_response_code(503);
             return array('msg' => "KOde tidak boleh kosong");
         } 
         else{
             $kueri = "INSERT INTO ".$this->table_name." SET ";
-            $kueri .= "id_kategori='".$this->id_kategori ."',";
+            $kueri .= "kode_kategori='".$this->kode_kategori ."',";
             $kueri .= "kategori='".$this->kategori."'";
             $hasil = $this->db->query($kueri);
             if ($hasil) {
@@ -51,18 +51,18 @@ class KategoriPilihan{
     }
 
     //fungsi update data
-    function update($id_kategori,$kategori=null){
-        $hasil= $this->getKategoriPilihan($id_kategori);
+    function update($kode_kategori,$kategori=null){
+        $hasil= $this->getKategoriPilihan($kode_kategori);
         $count=count($hasil["data"]);
         if ($count==0){ 
             http_response_code(503);
             return array('msg' => "Data tidak  ada, tidak dapat disimpan" );
         }
-        else if ($id_kategori  == null){
+        else if ($kode_kategori  == null){
             http_response_code(503);
             return array('msg' => "Kode tidak boleh kosong, tidak berhasil disimpan" );
         } else {
-            $this->setValue($hasil["data"][0]["id_kategori"],
+            $this->setValue($hasil["data"][0]["kode_kategori"],
                     $hasil["data"][0]["kategori"]
                     );
 
@@ -70,7 +70,7 @@ class KategoriPilihan{
 
             $kueri = "UPDATE ".$this->table_name." SET ";
             $kueri .= "kategori='".$this->kategori."'";
-            $kueri .= " WHERE id_kategori='".$this->id_kategori."'";
+            $kueri .= " WHERE kode_kategori='".$this->kode_kategori."'";
             $hasil = $this->db->query($kueri);
             if ($hasil){
                 http_response_code(201);
@@ -86,7 +86,7 @@ class KategoriPilihan{
 
     function getAll(){
         // return "test";
-        $kueri = "SELECT * FROM ".$this->table_name." ORDER BY id_kategori";
+        $kueri = "SELECT * FROM ".$this->table_name." ORDER BY kode_kategori";
         $hasil = $this->db->query($kueri) or die ("Error ".$this->db->connect_error);
         http_response_code(200);
         $data = array();
@@ -99,10 +99,10 @@ class KategoriPilihan{
         return array("msg"=>"success", "data"=>$data);
     }
 
-    function getKategoriPilihan($id_kategori){
+    function getKategoriPilihan($kode_kategori){
         // return "test";
         $kueri = "SELECT * FROM ".$this->table_name;
-        $kueri .=" WHERE id_kategori='".$id_kategori."'";
+        $kueri .=" WHERE kode_kategori='".$kode_kategori."'";
         $hasil = $this->db->query($kueri) or die ("Error ".$this->db->connect_error);
         http_response_code(200);
         $data = array();
@@ -115,18 +115,18 @@ class KategoriPilihan{
     }
 
     ///fungsi delete data
-    function delete($id_kategori){
+    function delete($kode_kategori){
         // return "test";
         $data="";
-        $row = $this->getKategoriPilihan($id_kategori);
+        $row = $this->getKategoriPilihan($kode_kategori);
         if (count($row["data"])==0) {
             http_response_code(304);
-            return array("msg"=>$row["msg"]."id_kategori ".$id_kategori);
+            return array("msg"=>$row["msg"]."kode_kategori ".$kode_kategori);
             return array('msg'=>$kueri);
         }
 
         $kueri = "DELETE FROM ".$this->table_name;
-        $kueri .=" WHERE id_kategori='".$id_kategori."'";
+        $kueri .=" WHERE kode_kategori='".$kode_kategori."'";
         $hasil = $this->db->query($kueri) or die ("Error ".$this->db->connect_error);
 
         http_response_code(200);
