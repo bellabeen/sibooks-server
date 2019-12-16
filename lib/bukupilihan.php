@@ -52,6 +52,8 @@ class BukuPilihan{
             //set path folder tempat penyimpanan foto
             $path = "upload/".$cover;
             move_uploaded_file($tmp, $path);
+
+            
             $kueri = "INSERT INTO ".$this->table_name1." SET ";
             $kueri .= "kode_buku='".$this->kode_buku ."',";
             $kueri .= "judul='".$this->judul ."',";
